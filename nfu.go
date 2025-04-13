@@ -80,3 +80,32 @@ func ParseDuration(durationStr string) (time.Duration, error) {
 	return totalDuration, nil
 }
 
+func main() {
+	// Test durations to validate ParseDuration function
+	testDurations := []string{
+		"1h 21m 27s",
+		"1m 53s",
+		"2m",
+		"42.9s",
+		"21h 40m 51s",
+		"3.5d",
+		"500ms",
+	}
+
+	fmt.Println("Testing ParseDuration function:")
+	fmt.Println("-------------------------------")
+	for _, durStr := range testDurations {
+		dur, err := ParseDuration(durStr)
+		if err != nil {
+			fmt.Printf("Error parsing '%s': %v\n", durStr, err)
+			continue
+		}
+
+		// Calculate minutes for easier comparison
+		minutes := dur.Minutes()
+
+		fmt.Printf("Original: %-15s | Parsed: %-15v | Minutes: %.2f\n",
+			durStr, dur, minutes)
+	}
+	fmt.Println("-------------------------------")
+}
